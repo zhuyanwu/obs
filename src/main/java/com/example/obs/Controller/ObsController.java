@@ -2,9 +2,7 @@ package com.example.obs.Controller;
 
 import com.obs.services.ObsClient;
 import com.obs.services.ObsConfiguration;
-import com.obs.services.model.GetObjectAclRequest;
-import com.obs.services.model.HeaderResponse;
-import com.obs.services.model.PutObjectResult;
+import com.obs.services.model.*;
 import com.obs.services.model.fs.FSStatusEnum;
 import com.obs.services.model.fs.FolderContentSummary;
 import com.oef.services.OefClient;
@@ -28,6 +26,12 @@ public class ObsController {
 
     private static final String sk = "o5DfcTF2VBFvGxPmAYB1bABxlteOQU4a97iO67Rk";
 
+//    private static final String endPoint = "obs.cn-north-4.myhuaweicloud.com";
+//
+//    private static final String ak = "01EIF6LVEFYG5APFIVI9";
+//
+//    private static final String sk = "pTfcxU2DQlaIYAXmgyboAOeA6DZZRiKQB4QHxY39";
+
     @GetMapping("/test")
     public String test(){
 //        ObsConfiguration config = new ObsConfiguration();
@@ -36,8 +40,13 @@ public class ObsController {
 //        config.setEndPoint(endPoint);
 
         ObsClient obsClient = new ObsClient(ak,sk,endPoint);
-        HeaderResponse response = obsClient.putObject("zhu-bucket", "book2", new File("D:\\gitProject\\book2.txt"));
-        return response.toString();
+//        HeaderResponse response = obsClient.putObject("zhu-bucket", "book2", new File("D:\\gitProject\\book2.txt"));
+        ObjectListing objectListing =obsClient.listObjects("zhu-bucket");
+        logger.info("size: " + objectListing.getObjects().size());
+        for(ObsObject obj : objectListing.getObjects()){
+            logger.info(obj.getObjectKey());
+        }
+        return objectListing.toString();
 
     }
 }
