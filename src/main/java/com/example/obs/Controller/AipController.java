@@ -35,7 +35,7 @@ public class AipController {
         options.put("probability", "true");
 
         // 参数为本地图片路径
-        String image = "1603166382.jpg";
+        String image = "1603243281.png";
         JSONObject res = client.basicGeneral(image, options);
         return res.toString(2);
     }
